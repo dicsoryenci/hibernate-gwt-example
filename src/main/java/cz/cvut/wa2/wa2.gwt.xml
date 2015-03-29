@@ -1,0 +1,18 @@
+<!DOCTYPE module PUBLIC "-//Google Inc.//DTD Google Web Toolkit 2.0//EN"
+        "http://google-web-toolkit.googlecode.com/svn/releases/2.0/distro-source/core/src/gwt-module.dtd">
+<module rename-to="wa2">
+
+    <!-- Inherit the core Web Toolkit stuff.                  -->
+    <inherits name='com.google.gwt.user.User'/>
+    <!--<inherits name='cz.cvut.wa2.wa2'/>-->
+    <!--<source path="cz.cvut.wa2.client.entitites.Car"></source>-->
+
+    <!-- Specify the app entry point class.                   -->
+    <entry-point class='cz.cvut.wa2.client.wa2'/>
+
+
+    <!-- Specify the app servlets.                   -->
+    <servlet path='/UserService' class='cz.cvut.wa2.server.UserServiceImpl'/>
+    <servlet path="/CarService" class="cz.cvut.wa2.server.CarServiceImpl"/>
+
+</module>
