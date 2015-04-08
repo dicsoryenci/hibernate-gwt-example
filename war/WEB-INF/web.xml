@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns="http://java.sun.com/xml/ns/javaee"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
+		  http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
+           version="3.0">
+
+    <servlet>
+        <servlet-name>cz.cvut.wa2.wa2 UserService</servlet-name>
+        <servlet-class>cz.cvut.wa2.server.UserServiceImpl</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>cz.cvut.wa2.wa2 UserService</servlet-name>
+        <url-pattern>/wa2/UserService</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>cz.cvut.wa2.wa2 CarService</servlet-name>
+        <servlet-class>cz.cvut.wa2.server.CarServiceImpl</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>cz.cvut.wa2.wa2 CarService</servlet-name>
+        <url-pattern>/wa2/CarService</url-pattern>
+    </servlet-mapping>
+</web-app>

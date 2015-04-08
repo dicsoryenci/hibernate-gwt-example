@@ -20,8 +20,8 @@ import com.google.gwt.user.client.ui.TabPanel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import cz.cvut.wa2.client.dto.CarDTO;
+import cz.cvut.wa2.client.dto.ManufacturerDTO;
 import cz.cvut.wa2.client.dto.UserDTO;
-import cz.cvut.wa2.client.entitites.User;
 
 public class wa2 implements EntryPoint {
 
@@ -63,6 +63,7 @@ public class wa2 implements EntryPoint {
                 int selected = event.getSelectedItem();
                 switch (selected) {
                     case 0:
+                        loadBrands(addCarPanel, carService);
                         break;
                     case 1:
                         loadUsers(borrowPanel, userService);
@@ -124,7 +125,7 @@ public class wa2 implements EntryPoint {
                 for (UserDTO user : result) {
                     String borrowedCars = "";
                     for (CarDTO c : user.getCars()) {
-                        borrowedCars += c.getId() + ",";
+                        borrowedCars += c.getName() + ",";
                     }
                     records.setText(index, 0, String.valueOf(user.getId()));
                     records.setText(index, 1, user.getName() + " (" + borrowedCars + ")");
@@ -180,6 +181,24 @@ public class wa2 implements EntryPoint {
         panel.add(addRecord);
     }
 
+    private void loadBrands(final VerticalPanel panel, final CarServiceAsync carService) {
+        carService.getManufacturers(new AsyncCallback<List<ManufacturerDTO>>() {
+            @Override
+            public void onFailure(Throwable caught) {
+                Window.alert("Failed to retrieve records." + caught.getMessage()); }
+
+            @Override
+            public void onSuccess(List<ManufacturerDTO> result) {
+                ListBox recordTitles = (ListBox) panel.getWidget(3);
+                recordTitles.clear();
+                for (ManufacturerDTO record : result) {
+                    recordTitles.addItem(record.getTile(), String
+                            .valueOf(record.getId()));
+                }
+            }
+        });
+    }
+
     private void loadCars(final HorizontalPanel addRecordsToAccountPanel, final CarServiceAsync carService) {
         carService.getCars(new AsyncCallback<List<CarDTO>>() {
             @Override
@@ -191,7 +210,7 @@ public class wa2 implements EntryPoint {
                 ListBox recordTitles = (ListBox) addRecordsToAccountPanel.getWidget(3);
                 recordTitles.clear();
                 for (CarDTO record : result) {
-                    recordTitles.addItem(record.getName(), String
+                    recordTitles.addItem(record.getName() + "(" + record.getManufacturer().getTile() + ")", String
                             .valueOf(record.getId()));
                 }
             }
@@ -221,14 +240,21 @@ public class wa2 implements EntryPoint {
         panel.setSize("500px", "300px");
         Label carNameLabel = new Label("Car name:");
         final TextBox carName = new TextBox();
+
+        Label manIdLabel = new Label("Manufacturer:");
+        final ListBox manIds = new ListBox();
+
         Button addRecord = new Button("Add");
 
         addRecord.addClickHandler(new ClickHandler() {
             @Override
             public void onClick(ClickEvent event) {
+                int index = manIds.getSelectedIndex();
+                Long manId = new Long(manIds.getValue(index));
+
                 CarDTO car = new CarDTO();
                 car.setName(carName.getText());
-                carsService.saveCar(car, new AsyncCallback<Long>() {
+                carsService.saveCar(car, manId, new AsyncCallback<Long>() {
                     @Override
                     public void onFailure(Throwable caught) {
                         Window.alert("Failed to save car.");
@@ -245,6 +271,8 @@ public class wa2 implements EntryPoint {
         });
         panel.add(carNameLabel);
         panel.add(carName);
+        panel.add(manIdLabel);
+        panel.add(manIds);
         panel.add(addRecord);
     }
 

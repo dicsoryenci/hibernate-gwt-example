@@ -2,6 +2,7 @@ package cz.cvut.wa2.client;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import cz.cvut.wa2.client.dto.CarDTO;
+import cz.cvut.wa2.client.dto.ManufacturerDTO;
 
 import java.util.List;
 
@@ -11,5 +12,7 @@ import java.util.List;
 public interface CarServiceAsync {
     public void getCars(AsyncCallback<List<CarDTO>> callback);
 
-    public void saveCar(CarDTO car, AsyncCallback<Long> callback);
+    public void getManufacturers(AsyncCallback<List<ManufacturerDTO>> callback);
+
+    public void saveCar(CarDTO car, Long manId, AsyncCallback<Long> callback);
 }

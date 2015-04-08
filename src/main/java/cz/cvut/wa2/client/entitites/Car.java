@@ -12,7 +12,10 @@ public class Car extends AbstractEntity {
     @Column
     private String name;
 
-    @ManyToMany(mappedBy = "cars", cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})
+    @ManyToOne(fetch=FetchType.LAZY)
+    private Manufacturer manufacturer;
+
+    @ManyToMany(mappedBy = "cars", cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH}, fetch=FetchType.LAZY)
     private List<User> users;
 
     public Car() {
@@ -22,6 +25,10 @@ public class Car extends AbstractEntity {
     public Car(CarDTO record) {
         id = record.getId();
         name = record.getName();
+        Manufacturer m = new Manufacturer();
+        m.setId(record.getManufacturer().getId());
+        m.setTitle(record.getManufacturer().getTile());
+        manufacturer = m;
     }
 
     public String getName() {
@@ -38,6 +45,14 @@ public class Car extends AbstractEntity {
 
     public void setUsers(List<User> users) {
         this.users = users;
+    }
+
+    public Manufacturer getManufacturer() {
+        return manufacturer;
+    }
+
+    public void setManufacturer(Manufacturer manufacturer) {
+        this.manufacturer = manufacturer;
     }
 
     @Override

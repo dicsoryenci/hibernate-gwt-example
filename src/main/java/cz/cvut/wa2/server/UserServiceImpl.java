@@ -30,7 +30,7 @@ public class UserServiceImpl extends RemoteServiceServlet implements UserService
                         user.getCars() != null ? user.getCars().size() : 0);
                 if (user.getCars() != null) {
                     for (Car car : user.getCars()) {
-                        tmp.add(new CarDTO(car.getId(), car.getName()));
+                        tmp.add(new CarDTO(car.getId(), car.getName(), car.getManufacturer()));
                     }
                 }
 

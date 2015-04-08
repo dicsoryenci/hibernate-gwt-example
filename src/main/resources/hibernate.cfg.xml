@@ -13,9 +13,10 @@
         <property name="hibernate.connection.password">root</property>
         <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
 
-        <property name="hibernate.hbm2ddl.auto">create-drop</property>
+        <!--<property name="hibernate.hbm2ddl.auto">create-drop</property>-->
 
         <mapping class="cz.cvut.wa2.client.entitites.Car"/>
         <mapping class="cz.cvut.wa2.client.entitites.User"/>
+        <mapping class="cz.cvut.wa2.client.entitites.Manufacturer"/>
     </session-factory>
 </hibernate-configuration>

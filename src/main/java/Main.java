@@ -38,6 +38,9 @@ public class Main {
             session.save(car);
             session.flush();
 
+//            String queryString = "SELECT c FROM Car c WHERE c.manufacturer_id IN (:value)";
+//            return session.createQuery(queryString).setParameter("value", value).getResultList();
+
             tr.commit();
 
         } finally {

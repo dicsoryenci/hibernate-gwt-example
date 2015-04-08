@@ -14,7 +14,7 @@ public class User extends AbstractEntity {
     @Column
     private String name;
 
-    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH}, fetch=FetchType.LAZY)
     private List<Car> cars;
 
     public User() {
